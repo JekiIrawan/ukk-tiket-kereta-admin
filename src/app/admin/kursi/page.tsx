@@ -13,7 +13,6 @@ export default function KursiPage() {
     async function fetchData() {
         const krs = await fetch("http://localhost:3001/api/kursi").then(r => r.json())
         const grb = await fetch("http://localhost:3001/api/gerbong").then(r => r.json())
-
         setKursi(krs)
         setGerbong(grb)
     }
@@ -46,11 +45,7 @@ export default function KursiPage() {
 
     async function handleDelete(id: number) {
         if (!confirm("Hapus kursi?")) return
-
-        await fetch(`http://localhost:3001/api/kursi/${id}`, {
-            method: "DELETE",
-        })
-
+        await fetch(`http://localhost:3001/api/kursi/${id}`, { method: "DELETE" })
         fetchData()
     }
 
@@ -65,16 +60,28 @@ export default function KursiPage() {
     }, [])
 
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">Data Kursi</h1>
+        <div className="space-y-6">
+            <h1 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+                Data Kursi
+            </h1>
 
             {/* FORM */}
             <form
                 onSubmit={handleSubmit}
-                className="bg-white p-4 shadow flex gap-2"
+                className="
+                  flex gap-3 p-4 rounded-lg
+                  bg-white dark:bg-neutral-900
+                  border border-neutral-200 dark:border-neutral-800
+                  shadow shadow-black/40
+                "
             >
                 <input
-                    className="border p-2 flex-1"
+                    className="
+                      flex-1 p-2 rounded
+                      border border-neutral-300 dark:border-neutral-700
+                      bg-white dark:bg-neutral-950
+                      text-neutral-900 dark:text-neutral-100
+                    "
                     placeholder="Nomor Kursi (contoh: 1A)"
                     value={nomor}
                     onChange={e => setNomor(e.target.value)}
@@ -82,7 +89,12 @@ export default function KursiPage() {
                 />
 
                 <select
-                    className="border p-2"
+                    className="
+                      p-2 rounded
+                      border border-neutral-300 dark:border-neutral-700
+                      bg-white dark:bg-neutral-950
+                      text-neutral-900 dark:text-neutral-100
+                    "
                     value={gerbongId}
                     onChange={e => setGerbongId(Number(e.target.value))}
                     required
@@ -95,43 +107,72 @@ export default function KursiPage() {
                     ))}
                 </select>
 
-                <button className="bg-gray-900 text-white px-4">
+                <button
+                    className="
+                      px-4 rounded
+                      bg-neutral-900 dark:bg-neutral-100
+                      text-white dark:text-neutral-900
+                    "
+                >
                     {editId ? "Update" : "Tambah"}
                 </button>
             </form>
 
             {/* TABLE */}
-            <table className="w-full bg-white shadow mt-6">
-                <thead className="bg-gray-200">
-                    <tr>
-                        <th className="p-2">Nomor Kursi</th>
-                        <th className="p-2">Gerbong</th>
-                        <th className="p-2">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {kursi.map(k => (
-                        <tr key={k.id} className="border-t">
-                            <td className="p-2">{k.nomor}</td>
-                            <td className="p-2">{k.gerbong_nama}</td>
-                            <td className="p-2 flex gap-2">
-                                <button
-                                    className="bg-yellow-500 text-white px-2"
-                                    onClick={() => handleEdit(k)}
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    className="bg-red-600 text-white px-2"
-                                    onClick={() => handleDelete(k.id)}
-                                >
-                                    Hapus
-                                </button>
-                            </td>
+            <div
+                className="
+                  bg-white dark:bg-neutral-900
+                  border border-neutral-200 dark:border-neutral-800
+                  shadow shadow-black/40
+                  rounded-lg overflow-hidden
+                "
+            >
+                <table className="w-full">
+                    <thead className="bg-neutral-100 dark:bg-neutral-800">
+                        <tr>
+                            <th className="p-3 text-left">Nomor Kursi</th>
+                            <th className="p-3 text-left">Gerbong</th>
+                            <th className="p-3 text-left">Aksi</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {kursi.map(k => (
+                            <tr
+                                key={k.id}
+                                className="border-t border-neutral-200 dark:border-neutral-800"
+                            >
+                                <td className="p-3">{k.nomor}</td>
+                                <td className="p-3">{k.gerbong_nama}</td>
+                                <td className="p-3 flex gap-2">
+                                    <button
+                                        className="bg-yellow-500 text-white px-3 py-1 rounded"
+                                        onClick={() => handleEdit(k)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="bg-red-600 text-white px-3 py-1 rounded"
+                                        onClick={() => handleDelete(k.id)}
+                                    >
+                                        Hapus
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+
+                        {kursi.length === 0 && (
+                            <tr>
+                                <td
+                                    colSpan={3}
+                                    className="p-4 text-center text-neutral-500"
+                                >
+                                    Belum ada data kursi
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

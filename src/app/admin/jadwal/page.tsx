@@ -16,7 +16,6 @@ export default function JadwalPage() {
     async function fetchData() {
         const j = await fetch("http://localhost:3001/api/jadwal").then(r => r.json())
         const k = await fetch("http://localhost:3001/api/kereta").then(r => r.json())
-
         setJadwal(j)
         setKereta(k)
     }
@@ -64,11 +63,7 @@ export default function JadwalPage() {
 
     async function handleDelete(id: number) {
         if (!confirm("Hapus jadwal?")) return
-
-        await fetch(`http://localhost:3001/api/jadwal/${id}`, {
-            method: "DELETE",
-        })
-
+        await fetch(`http://localhost:3001/api/jadwal/${id}`, { method: "DELETE" })
         fetchData()
     }
 
@@ -77,16 +72,28 @@ export default function JadwalPage() {
     }, [])
 
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">Data Jadwal</h1>
+        <div className="space-y-6">
+            <h1 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+                Data Jadwal
+            </h1>
 
             {/* FORM */}
             <form
                 onSubmit={handleSubmit}
-                className="bg-white p-4 shadow grid grid-cols-6 gap-2"
+                className="
+                  grid grid-cols-6 gap-3 p-4 rounded-lg
+                  bg-white dark:bg-neutral-900
+                  border border-neutral-200 dark:border-neutral-800
+                  shadow shadow-black/40
+                "
             >
                 <select
-                    className="border p-2 col-span-1"
+                    className="
+                      border border-neutral-300 dark:border-neutral-700
+                      bg-white dark:bg-neutral-950
+                      text-neutral-900 dark:text-neutral-100
+                      p-2 rounded
+                    "
                     value={keretaId}
                     onChange={e => setKeretaId(Number(e.target.value))}
                     required
@@ -101,14 +108,24 @@ export default function JadwalPage() {
 
                 <input
                     type="date"
-                    className="border p-2 col-span-1"
+                    className="
+                      border border-neutral-300 dark:border-neutral-700
+                      bg-white dark:bg-neutral-950
+                      text-neutral-900 dark:text-neutral-100
+                      p-2 rounded
+                    "
                     value={tanggal}
                     onChange={e => setTanggal(e.target.value)}
                     required
                 />
 
                 <input
-                    className="border p-2 col-span-1"
+                    className="
+                      border border-neutral-300 dark:border-neutral-700
+                      bg-white dark:bg-neutral-950
+                      text-neutral-900 dark:text-neutral-100
+                      p-2 rounded
+                    "
                     placeholder="Berangkat"
                     value={berangkat}
                     onChange={e => setBerangkat(e.target.value)}
@@ -116,7 +133,12 @@ export default function JadwalPage() {
                 />
 
                 <input
-                    className="border p-2 col-span-1"
+                    className="
+                      border border-neutral-300 dark:border-neutral-700
+                      bg-white dark:bg-neutral-950
+                      text-neutral-900 dark:text-neutral-100
+                      p-2 rounded
+                    "
                     placeholder="Tujuan"
                     value={tujuan}
                     onChange={e => setTujuan(e.target.value)}
@@ -125,56 +147,90 @@ export default function JadwalPage() {
 
                 <input
                     type="number"
-                    className="border p-2 col-span-1"
+                    className="
+                      border border-neutral-300 dark:border-neutral-700
+                      bg-white dark:bg-neutral-950
+                      text-neutral-900 dark:text-neutral-100
+                      p-2 rounded
+                    "
                     placeholder="Harga"
                     value={harga}
                     onChange={e => setHarga(e.target.value)}
                     required
                 />
 
-                <button className="bg-gray-900 text-white col-span-1">
+                <button
+                    className="
+                      bg-neutral-900 dark:bg-neutral-100
+                      text-white dark:text-neutral-900
+                      rounded
+                    "
+                >
                     {editId ? "Update" : "Tambah"}
                 </button>
             </form>
 
             {/* TABLE */}
-            <table className="w-full bg-white shadow mt-6">
-                <thead className="bg-gray-200">
-                    <tr>
-                        <th className="p-2">Kereta</th>
-                        <th className="p-2">Tanggal</th>
-                        <th className="p-2">Berangkat</th>
-                        <th className="p-2">Tujuan</th>
-                        <th className="p-2">Harga</th>
-                        <th className="p-2">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {jadwal.map(j => (
-                        <tr key={j.id} className="border-t">
-                            <td className="p-2">{j.kereta_nama}</td>
-                            <td className="p-2">{j.tanggal}</td>
-                            <td className="p-2">{j.berangkat}</td>
-                            <td className="p-2">{j.tujuan}</td>
-                            <td className="p-2">Rp {j.harga}</td>
-                            <td className="p-2 flex gap-2">
-                                <button
-                                    className="bg-yellow-500 text-white px-2"
-                                    onClick={() => handleEdit(j)}
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    className="bg-red-600 text-white px-2"
-                                    onClick={() => handleDelete(j.id)}
-                                >
-                                    Hapus
-                                </button>
-                            </td>
+            <div
+                className="
+                  bg-white dark:bg-neutral-900
+                  border border-neutral-200 dark:border-neutral-800
+                  shadow shadow-black/40
+                  rounded-lg overflow-hidden
+                "
+            >
+                <table className="w-full">
+                    <thead className="bg-neutral-100 dark:bg-neutral-800">
+                        <tr>
+                            <th className="p-3 text-left">Kereta</th>
+                            <th className="p-3 text-left">Tanggal</th>
+                            <th className="p-3 text-left">Berangkat</th>
+                            <th className="p-3 text-left">Tujuan</th>
+                            <th className="p-3 text-left">Harga</th>
+                            <th className="p-3 text-left">Aksi</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {jadwal.map(j => (
+                            <tr
+                                key={j.id}
+                                className="border-t border-neutral-200 dark:border-neutral-800"
+                            >
+                                <td className="p-3">{j.kereta_nama}</td>
+                                <td className="p-3">{j.tanggal}</td>
+                                <td className="p-3">{j.berangkat}</td>
+                                <td className="p-3">{j.tujuan}</td>
+                                <td className="p-3">Rp {j.harga}</td>
+                                <td className="p-3 flex gap-2">
+                                    <button
+                                        className="bg-yellow-500 text-white px-3 py-1 rounded"
+                                        onClick={() => handleEdit(j)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="bg-red-600 text-white px-3 py-1 rounded"
+                                        onClick={() => handleDelete(j.id)}
+                                    >
+                                        Hapus
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+
+                        {jadwal.length === 0 && (
+                            <tr>
+                                <td
+                                    colSpan={6}
+                                    className="p-4 text-center text-neutral-500"
+                                >
+                                    Belum ada data jadwal
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

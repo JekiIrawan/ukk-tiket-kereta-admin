@@ -1,20 +1,49 @@
+import DashboardCard from "@/components/dashboard-card"
+
 export default function AdminDashboard() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">
-        Dashboard Admin
-      </h1>
+    <div className="space-y-6">
+      {/* HEADER */}
+      <div>
+        <h1 className="text-2xl font-semibold">
+          Dashboard
+        </h1>
+        <p className="text-sm text-neutral-500">
+          Ringkasan aktivitas sistem
+        </p>
+      </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-white p-4 rounded shadow">
-          Total Transaksi
-        </div>
-        <div className="bg-white p-4 rounded shadow">
-          Total Pemasukan
-        </div>
-        <div className="bg-white p-4 rounded shadow">
-          Jumlah Pelanggan
-        </div>
+      {/* CARDS */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <DashboardCard
+          title="Total Transaksi"
+          value="128"
+          subtitle="Bulan ini"
+        />
+        <DashboardCard
+          title="Total Pemasukan"
+          value="Rp 12.500.000"
+          subtitle="Februari 2026"
+        />
+        <DashboardCard
+          title="Jumlah Penumpang"
+          value="96"
+          subtitle="Semua booking"
+        />
+      </div>
+
+      {/* SECTION BAWAH */}
+      <div
+        className="
+          rounded-xl
+          border border-neutral-800
+          bg-neutral-900/50
+          p-6
+          text-neutral-400
+          text-sm
+        "
+      >
+        Grafik & analitik akan ditambahkan di sini.
       </div>
     </div>
   )

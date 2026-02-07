@@ -42,28 +42,38 @@ export default function KeretaForm({ selected, onSuccess }: Props) {
 
     return (
         <form
-            onSubmit={handleSubmit}
-            className="bg-white p-4 shadow flex gap-2"
+            className="flex gap-2"
         >
             <input
-                className="border p-2 flex-1"
+                className="
+      flex-1 p-2 rounded
+      bg-white dark:bg-neutral-950
+      border border-neutral-300 dark:border-neutral-700
+      text-neutral-900 dark:text-neutral-100
+    "
                 placeholder="Nama Kereta"
-                value={nama}
-                onChange={e => setNama(e.target.value)}
-                required
             />
 
             <input
-                className="border p-2 flex-1"
+                className="
+      p-2 rounded
+      bg-white dark:bg-neutral-950
+      border border-neutral-300 dark:border-neutral-700
+      text-neutral-900 dark:text-neutral-100
+    "
                 placeholder="Kelas"
-                value={kelas}
-                onChange={e => setKelas(e.target.value)}
-                required
             />
 
-            <button className="bg-gray-900 text-white px-4">
-                {selected ? "Update" : "Tambah"}
+            <button
+                className="
+      bg-neutral-900 dark:bg-neutral-100
+      text-white dark:text-neutral-900
+      px-4 rounded
+    "
+            >
+                Tambah
             </button>
         </form>
+
     )
 }

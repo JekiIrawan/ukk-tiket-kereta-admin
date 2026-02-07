@@ -1,9 +1,20 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+
+const menu = [
+  { label: "Dashboard", href: "/admin" },
+  { label: "Kereta", href: "/admin/kereta" },
+  { label: "Gerbong", href: "/admin/gerbong" },
+  { label: "Kursi", href: "/admin/kursi" },
+  { label: "Jadwal", href: "/admin/jadwal" },
+  { label: "Booking", href: "/admin/booking" },
+  { label: "Rekap Pemasukan", href: "/admin/rekap" },
+]
 
 export default function Sidebar() {
+  const pathname = usePathname()
   const router = useRouter()
 
   function handleLogout() {
@@ -14,30 +25,58 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-64 bg-gray-900 text-white min-h-screen p-4">
-      <h2 className="text-xl font-bold mb-6">
+    <aside className="w-64 bg-neutral-900 text-neutral-200 min-h-screen p-4">
+      <h2 className="text-xl font-semibold mb-6 text-neutral-100">
         Admin Panel
       </h2>
 
-      <nav className="flex flex-col gap-3">
-        <Link href="/admin">Dashboard</Link>
-        <Link href="/admin/kereta">Kereta</Link>
-        <Link href="/admin/gerbong">Gerbong</Link>
-        <Link href="/admin/kursi">Kursi</Link>
-        <Link href="/admin/jadwal">Jadwal</Link>
-        <Link href="/admin/booking">Booking</Link>
-        <Link href="/admin/rekap">Rekap Pemasukan</Link>
+      <nav className="flex flex-col gap-1">
+        {menu.map(item => {
+          const active =
+            pathname === item.href ||
+            pathname.startsWith(item.href + "/")
 
-        <hr className="my-2 border-gray-700" />
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`
+                group relative px-3 py-2 rounded-md
+                transition-colors duration-200
+                ${
+                  active
+                    ? "text-white"
+                    : "text-neutral-400 hover:text-neutral-200"
+                }
+              `}
+            >
+              {item.label}
 
-        <Link href="/admin/transaksi">Transaksi</Link>
-        <Link href="/admin/petugas">Petugas</Link>
+              {/* underline anim */}
+              <span
+                className={`
+                  pointer-events-none
+                  absolute left-3 right-3 bottom-1 h-[2px]
+                  origin-left
+                  scale-x-0
+                  bg-gradient-to-r
+                  from-indigo-400
+                  via-sky-400
+                  to-emerald-400
+                  transition-transform duration-300 ease-out
+
+                  group-hover:scale-x-100
+                  ${active ? "scale-x-100" : ""}
+                `}
+              />
+            </Link>
+          )
+        })}
       </nav>
-
 
       <button
         onClick={handleLogout}
-        className="mt-8 bg-red-600 px-3 py-2 rounded"
+        className="mt-8 w-full bg-red-600/90 hover:bg-red-600 transition text-white px-3 py-2 rounded-md"
       >
         Logout
       </button>

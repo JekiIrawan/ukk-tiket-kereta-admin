@@ -29,48 +29,73 @@ export default function KeretaPage() {
   }, [])
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Data Kereta</h1>
+    <div className="space-y-6">
+      <h1 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+        Data Kereta
+      </h1>
 
-      <KeretaForm
-        selected={selected}
-        onSuccess={() => {
-          setSelected(null)
-          fetchKereta()
-        }}
-      />
+      {/* FORM */}
+      <div
+        className="
+          bg-white dark:bg-neutral-900
+          border border-neutral-200 dark:border-neutral-800
+          shadow shadow-black/40
+          rounded-lg p-4
+        "
+      >
+        <KeretaForm
+          selected={selected}
+          onSuccess={() => {
+            setSelected(null)
+            fetchKereta()
+          }}
+        />
+      </div>
 
-      <table className="w-full bg-white shadow mt-6">
-        <thead className="bg-gray-200">
-          <tr>
-            <th className="p-2">Nama</th>
-            <th className="p-2">Kelas</th>
-            <th className="p-2">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(k => (
-            <tr key={k.id} className="border-t">
-              <td className="p-2">{k.nama}</td>
-              <td className="p-2">{k.kelas}</td>
-              <td className="p-2 flex gap-2">
-                <button
-                  className="px-2 py-1 bg-yellow-500 text-white"
-                  onClick={() => setSelected(k)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="px-2 py-1 bg-red-600 text-white"
-                  onClick={() => handleDelete(k.id)}
-                >
-                  Hapus
-                </button>
-              </td>
+      {/* TABLE */}
+      <div
+        className="
+          bg-white dark:bg-neutral-900
+          border border-neutral-200 dark:border-neutral-800
+          shadow shadow-black/40
+          rounded-lg overflow-hidden
+        "
+      >
+        <table className="w-full">
+          <thead className="bg-neutral-100 dark:bg-neutral-800">
+            <tr>
+              <th className="p-3 text-left">Nama</th>
+              <th className="p-3 text-left">Kelas</th>
+              <th className="p-3 text-left">Aksi</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map(k => (
+              <tr
+                key={k.id}
+                className="border-t border-neutral-200 dark:border-neutral-800"
+              >
+                <td className="p-3">{k.nama}</td>
+                <td className="p-3">{k.kelas}</td>
+                <td className="p-3 flex gap-2">
+                  <button
+                    className="bg-yellow-500 text-white px-3 py-1 rounded"
+                    onClick={() => setSelected(k)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="bg-red-600 text-white px-3 py-1 rounded"
+                    onClick={() => handleDelete(k.id)}
+                  >
+                    Hapus
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

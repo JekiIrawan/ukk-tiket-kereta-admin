@@ -1,10 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Jadwal, Kursi } from "@/app/lib/types"
+import { Jadwal, Kursi, BookingList } from "@/app/lib/types"
 import Link from "next/link"
-import { BookingList } from "@/app/lib/types"
-
 
 export default function BookingPage() {
     const [jadwal, setJadwal] = useState<Jadwal[]>([])
@@ -28,7 +26,6 @@ export default function BookingPage() {
         const k = await fetch(
             `http://localhost:3001/api/kursi?jadwal_id=${jadwal_id}`
         ).then(r => r.json())
-
         setKursi(k)
     }
 
@@ -47,8 +44,8 @@ export default function BookingPage() {
 
         setNama("")
         setKursiId("")
-        alert("Booking berhasil")
         fetchBooking()
+        alert("Booking berhasil")
     }
 
     useEffect(() => {
@@ -61,15 +58,28 @@ export default function BookingPage() {
     }, [jadwalId])
 
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">Booking Penumpang</h1>
+        <div className="space-y-6">
+            <h1 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+                Booking Penumpang
+            </h1>
 
+            {/* FORM */}
             <form
                 onSubmit={handleSubmit}
-                className="bg-white p-4 shadow grid grid-cols-4 gap-2"
+                className="
+                  grid grid-cols-4 gap-3 p-4 rounded-lg
+                  bg-white dark:bg-neutral-900
+                  border border-neutral-200 dark:border-neutral-800
+                  shadow shadow-black/40
+                "
             >
                 <select
-                    className="border p-2"
+                    className="
+                      border border-neutral-300 dark:border-neutral-700
+                      bg-white dark:bg-neutral-950
+                      text-neutral-900 dark:text-neutral-100
+                      p-2 rounded
+                    "
                     value={jadwalId}
                     onChange={e => setJadwalId(Number(e.target.value))}
                     required
@@ -83,11 +93,17 @@ export default function BookingPage() {
                 </select>
 
                 <select
-                    className="border p-2"
+                    className="
+                      border border-neutral-300 dark:border-neutral-700
+                      bg-white dark:bg-neutral-950
+                      text-neutral-900 dark:text-neutral-100
+                      p-2 rounded
+                      disabled:opacity-50
+                    "
                     value={kursiId}
                     onChange={e => setKursiId(Number(e.target.value))}
-                    required
                     disabled={!jadwalId}
+                    required
                 >
                     <option value="">Pilih Kursi</option>
                     {kursi.map(k => (
@@ -98,47 +114,77 @@ export default function BookingPage() {
                 </select>
 
                 <input
-                    className="border p-2"
+                    className="
+                      border border-neutral-300 dark:border-neutral-700
+                      bg-white dark:bg-neutral-950
+                      text-neutral-900 dark:text-neutral-100
+                      p-2 rounded
+                    "
                     placeholder="Nama Penumpang"
                     value={nama}
                     onChange={e => setNama(e.target.value)}
                     required
                 />
 
-                <button className="bg-gray-900 text-white">
+                <button
+                    className="
+                      bg-neutral-900 dark:bg-neutral-100
+                      text-white dark:text-neutral-900
+                      rounded
+                    "
+                >
                     Booking
                 </button>
             </form>
-            <table className="w-full bg-white shadow mt-6">
-                <thead className="bg-gray-200">
-                    <tr>
-                        <th className="p-2">Nama</th>
-                        <th className="p-2">Kereta</th>
-                        <th className="p-2">Tanggal</th>
-                        <th className="p-2">Kursi</th>
-                        <th className="p-2">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {booking.map(b => (
-                        <tr key={b.id} className="border-t">
-                            <td className="p-2">{b.nama_penumpang}</td>
-                            <td className="p-2">{b.kereta_nama}</td>
-                            <td className="p-2">{b.tanggal}</td>
-                            <td className="p-2">{b.kursi_nomor}</td>
-                            <td className="p-2">
-                                <Link
-                                    href={`/admin/booking/${b.id}`}
-                                    className="bg-blue-600 text-white px-2 py-1"
-                                >
-                                    Cetak
-                                </Link>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
 
+            {/* TABLE */}
+            <div
+                className="
+                  bg-white dark:bg-neutral-900
+                  border border-neutral-200 dark:border-neutral-800
+                  shadow shadow-black/40
+                  rounded-lg overflow-hidden
+                "
+            >
+                <table className="w-full">
+                    <thead className="bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400">
+                        <tr>
+                            <th className="p-3 text-left">Nama</th>
+                            <th className="p-3 text-left">Kereta</th>
+                            <th className="p-3 text-left">Tanggal</th>
+                            <th className="p-3 text-left">Kursi</th>
+                            <th className="p-3 text-left">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {booking.map(b => (
+                            <tr
+                                key={b.id}
+                                className="
+    group
+    border-t border-neutral-200 dark:border-neutral-800
+    transition-colors duration-200
+    hover:bg-neutral-100/70 dark:hover:bg-neutral-900/60
+  "
+                            >
+
+                                <td className="p-3">{b.nama_penumpang}</td>
+                                <td className="p-3">{b.kereta_nama}</td>
+                                <td className="p-3">{b.tanggal}</td>
+                                <td className="p-3">{b.kursi_nomor}</td>
+                                <td className="p-3">
+                                    <Link
+                                        href={`/admin/booking/${b.id}`}
+                                        className="bg-blue-600 text-white px-3 py-1 rounded"
+                                    >
+                                        Cetak
+                                    </Link>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
