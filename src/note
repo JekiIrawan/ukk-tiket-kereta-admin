@@ -1,0 +1,126 @@
+// backend endpoint
+
+// app.post("/api/admin/login", (req, res) => {
+//   const { username, password } = req.body
+
+//   if (username === "admin" && password === "admin123") {
+//     return res.json({
+//       token: "valid-admin-token"
+//     })
+//   }
+
+//   return res.status(401).json({
+//     message: "Login gagal"
+//   })
+// })
+
+
+
+// gerbong
+// GET    /api/gerbong        (join kereta)
+// POST   /api/gerbong
+// PUT    /api/gerbong/:id
+// DELETE /api/gerbong/:id
+
+
+// {
+//   "id": 1,
+//   "nama": "Eksekutif 1",
+//   "kereta_id": 2,
+//   "kereta_nama": "Argo Bromo"
+// }
+
+
+
+// // kursi
+
+// GET    /api/kursi        (join gerbong)
+// POST   /api/kursi
+// PUT    /api/kursi/:id
+// DELETE /api/kursi/:id
+
+
+// {
+//   "id": 5,
+//   "nomor": "1A",
+//   "gerbong_id": 3,
+//   "gerbong_nama": "Eksekutif 1"
+// }
+
+
+
+// jadwal
+// GET    /api/jadwal        (join kereta)
+// POST   /api/jadwal
+// PUT    /api/jadwal/:id
+// DELETE /api/jadwal/:id
+
+// {
+//   "id": 1,
+//   "kereta_id": 2,
+//   "kereta_nama": "Argo Bromo",
+//   "tanggal": "2026-02-10",
+//   "berangkat": "Surabaya",
+//   "tujuan": "Jakarta",
+//   "harga": 350000
+// }
+
+
+
+// booking
+// GET  /api/kursi?jadwal_id=1
+// POST /api/booking
+
+
+//rekap
+// GET /api/rekap?bulan=2026-02
+
+// SELECT 
+//   DATE_FORMAT(b.tanggal_pesan, '%Y-%m') AS bulan,
+//   SUM(j.harga) AS total
+// FROM booking b
+// JOIN jadwal j ON b.jadwal_id = j.id
+// WHERE DATE_FORMAT(b.tanggal_pesan, '%Y-%m') = '2026-02'
+// GROUP BY bulan;
+
+// response
+// {
+//   "bulan": "2026-02",
+//   "total": 1250000
+// }
+
+
+
+// cetak nota booking
+// endpoint: GET /api/booking/:id
+
+// {
+//   "id": 10,
+//   "nama_penumpang": "Budi",
+//   "tanggal_pesan": "2026-02-05",
+//   "harga": 350000,
+//   "kursi_nomor": "1A",
+//   "gerbong_nama": "Eksekutif 1",
+//   "kereta_nama": "Argo Bromo",
+//   "tanggal": "2026-02-10",
+//   "berangkat": "Surabaya",
+//   "tujuan": "Jakarta"
+// }
+
+
+
+//notabooking
+// GET /api/booking/:id
+
+
+// {
+//   "id": 1,
+//   "nama_penumpang": "Budi",
+//   "kereta_nama": "Argo Bromo",
+//   "gerbong_nama": "Eksekutif A",
+//   "kursi_nomor": "A1",
+//   "tanggal": "2026-02-10",
+//   "berangkat": "Jakarta",
+//   "tujuan": "Surabaya",
+//   "harga": 350000
+// }
